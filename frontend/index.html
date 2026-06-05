@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GymTrack</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- ══════════════ LOGIN PAGE ══════════════ -->
+    <div class="page active" id="loginPage">
+      <div class="auth-glow"></div>
+      <div class="auth-glow2"></div>
+      <div class="auth-box">
+        <div class="auth-logo">
+          <div class="auth-logo-icon">💪</div>
+          <span class="auth-logo-text">GymTrack</span>
+        </div>
+        <div class="auth-title">Welcome back</div>
+        <div class="auth-sub">Login to your account</div>
+        <div class="error-msg" id="loginError"></div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input
+            class="form-input"
+            id="loginEmail"
+            type="email"
+            placeholder="you@example.com"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input
+            class="form-input"
+            id="loginPass"
+            type="password"
+            placeholder="••••••••"
+          />
+        </div>
+        <button class="btn btn-primary" id="loginBtn" style="margin-top: 8px">
+          Login
+        </button>
+        <div class="auth-switch">
+          Don't have an account?
+          <a onclick="showPage('registerPage')">Sign up</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ REGISTER PAGE ══════════════ -->
+    <div class="page" id="registerPage">
+      <div class="auth-glow"></div>
+      <div class="auth-glow2"></div>
+      <div class="auth-box">
+        <div class="auth-logo">
+          <div class="auth-logo-icon">💪</div>
+          <span class="auth-logo-text">GymTrack</span>
+        </div>
+        <div class="auth-title">Create account</div>
+        <div class="auth-sub">Start tracking your progress today</div>
+        <div class="error-msg" id="registerError"></div>
+        <div class="form-group">
+          <label class="form-label">Full name</label>
+          <input
+            class="form-input"
+            id="regName"
+            type="text"
+            placeholder="Your name"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input
+            class="form-input"
+            id="regEmail"
+            type="email"
+            placeholder="you@example.com"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label"
+            >Password
+            <span style="color: var(--muted); font-size: 11px"
+              >(min 6 chars)</span
+            ></label
+          >
+          <input
+            class="form-input"
+            id="regPass"
+            type="password"
+            placeholder="••••••••"
+          />
+        </div>
+        <button
+          class="btn btn-primary"
+          id="registerBtn"
+          style="margin-top: 8px"
+        >
+          Create account
+        </button>
+        <div class="auth-switch">
+          Already have an account? <a onclick="showPage('loginPage')">Login</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ APP PAGE ══════════════ -->
+    <div class="page" id="appPage">
+      <!-- SIDEBAR -->
+      <div class="sidebar">
+        <div class="sidebar-glow"></div>
+        <div class="brand">
+          <div class="brand-icon">💪</div>
+          <span class="brand-name">GymTrack</span>
+        </div>
+        <div class="user-pill">
+          <div class="ava" id="sideAva">??</div>
+          <div>
+            <div class="uname" id="sideName">...</div>
+            <div class="ustatus">Athlete</div>
+          </div>
+        </div>
+        <nav>
+          <div class="ni active" onclick="switchSection('dashboard')">
+            <span class="ni-icon">📊</span> Dashboard
+          </div>
+          <div class="ni" onclick="switchSection('workouts')">
+            <span class="ni-icon">🏋️</span> My Workouts
+          </div>
+          <div class="ni" onclick="switchSection('progress')">
+            <span class="ni-icon">📈</span> Progress
+          </div>
+          <div class="ni" onclick="switchSection('history')">
+            <span class="ni-icon">📅</span> History
+          </div>
+        </nav>
+        <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+      </div>
+
+      <!-- MAIN -->
+      <div class="main">
+        <div class="main-glow"></div>
+
+        <!-- TOPBAR -->
+        <div class="topbar">
+          <div>
+            <div class="topbar-title" id="topTitle">Dashboard</div>
+            <div class="topbar-sub" id="topSub">Overview of your training</div>
+          </div>
+          <div style="display: flex; gap: 8px" id="topActions"></div>
+        </div>
+
+        <!-- ── DASHBOARD ── -->
+        <div class="section active" id="sec-dashboard">
+          <div class="stats">
+            <div class="stat-card glow">
+              <div class="stat-label">Workout Days</div>
+              <div class="stat-val" id="statDays">0</div>
+              <div class="stat-sub">in your plan</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Total Exercises</div>
+              <div class="stat-val" id="statEx">0</div>
+              <div class="stat-sub">logged overall</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Total Sets</div>
+              <div class="stat-val" id="statVol">0</div>
+              <div class="stat-sub">kg lifted total</div>
+            </div>
+          </div>
+          <div class="section-title">Recent exercises</div>
+          <div id="recentList">
+            <div class="empty">
+              <div class="empty-icon">🏁</div>
+              <div class="empty-text">
+                No exercises yet. Add your first workout day!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── WORKOUTS ── -->
+        <div class="section" id="sec-workouts">
+          <div class="days-list" id="daysList"></div>
+          <button class="add-day-btn" id="addDayBtn">
+            ➕ Create new workout day
+          </button>
+        </div>
+
+        <!-- ── PROGRESS ── -->
+        <div class="section" id="sec-progress">
+          <div class="progress-list" id="progressList">
+            <div class="empty">
+              <div class="empty-icon">📈</div>
+              <div class="empty-text">
+                Log some exercises to see your progress!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── HISTORY ── -->
+        <div class="section" id="sec-history">
+          <div class="history-list" id="historyList">
+            <div class="empty">
+              <div class="empty-icon">📅</div>
+              <div class="empty-text">No history yet.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end main -->
+    </div>
+    <!-- end appPage -->
+
+    <!-- ══════════════ MODALS ══════════════ -->
+
+    <!-- Add Day Modal -->
+    <div class="overlay" id="addDayModal">
+      <div class="modal">
+        <button class="modal-close" onclick="closeModal('addDayModal')">
+          ✕
+        </button>
+        <div class="modal-title">Create workout day</div>
+        <div class="form-group">
+          <label class="form-label">Day name</label>
+          <input
+            class="form-input"
+            id="newDayName"
+            placeholder="e.g. Chest & Back, Arms, Legs..."
+          />
+        </div>
+        <div class="modal-footer">
+          <button class="btn-sm ghost" onclick="closeModal('addDayModal')">
+            Cancel
+          </button>
+          <button class="btn-sm primary" onclick="createDay()">Create</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Exercise Modal -->
+    <div class="overlay" id="addExModal">
+      <div class="modal">
+        <button class="modal-close" onclick="closeModal('addExModal')">
+          ✕
+        </button>
+        <div class="modal-title">Add exercise</div>
+        <input type="hidden" id="exDayId" />
+        <div class="form-group">
+          <label class="form-label">Exercise name</label>
+          <input
+            class="form-input"
+            id="exName"
+            placeholder="e.g. Bench Press, Squats..."
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Sets</label>
+          <div class="sets-container" id="setsContainer"></div>
+          <button
+            class="add-set-btn"
+            style="margin-top: 8px; width: 100%"
+            onclick="addSetRow()"
+          >
+            ➕ Add set
+          </button>
+        </div>
+        <div class="form-group">
+          <label class="form-label"
+            >Notes
+            <span style="color: var(--muted); font-size: 11px"
+              >(optional)</span
+            ></label
+          >
+          <input class="form-input" id="exNotes" placeholder="Any notes..." />
+        </div>
+        <div class="modal-footer">
+          <button class="btn-sm ghost" onclick="closeModal('addExModal')">
+            Cancel
+          </button>
+          <button class="btn-sm primary" onclick="saveExercise()">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Exercise Modal -->
+    <div class="overlay" id="editExModal">
+      <div class="modal">
+        <button class="modal-close" onclick="closeModal('editExModal')">
+          ✕
+        </button>
+        <div class="modal-title">Edit exercise</div>
+        <input type="hidden" id="editExId" />
+        <div class="form-group">
+          <label class="form-label">Exercise name</label>
+          <input class="form-input" id="editExName" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Sets</label>
+          <div class="sets-container" id="editSetsContainer"></div>
+          <button
+            class="add-set-btn"
+            style="margin-top: 8px; width: 100%"
+            onclick="addSetRow('edit')"
+          >
+            ➕ Add set
+          </button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Notes</label>
+          <input class="form-input" id="editExNotes" />
+        </div>
+        <div class="modal-footer">
+          <button class="btn-sm ghost" onclick="closeModal('editExModal')">
+            Cancel
+          </button>
+          <button class="btn-sm primary" onclick="updateExercise()">
+            Update
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rename Day Modal -->
+    <div class="overlay" id="renameDayModal">
+      <div class="modal">
+        <button class="modal-close" onclick="closeModal('renameDayModal')">
+          ✕
+        </button>
+        <div class="modal-title">Rename day</div>
+        <input type="hidden" id="renameDayId" />
+        <div class="form-group">
+          <label class="form-label">Day name</label>
+          <input class="form-input" id="renameDayName" />
+        </div>
+        <div class="modal-footer">
+          <button class="btn-sm ghost" onclick="closeModal('renameDayModal')">
+            Cancel
+          </button>
+          <button class="btn-sm primary" onclick="renameDay()">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
